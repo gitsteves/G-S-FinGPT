@@ -1,0 +1,30 @@
+name: Mirror to Private Repo
+
+on:
+  workflow_dispatch: # allows manual trigger
+  push:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Full history needed for mirroring
+
+      - name: Push to private mirror
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+          # Set up the private repo URL with PAT
+          PRIVATE_REPO="https://${{ secrets.TARGET_REPO_PAT }}@github.com/gitsteves/weekly-trader.git"
+
+          # Add private repo as new remote
+          git remote add mirror $PRIVATE_REPO
+
+          # Push all branches and tags
+          git push mirror --mirror
