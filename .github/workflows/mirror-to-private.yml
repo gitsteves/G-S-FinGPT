@@ -21,7 +21,7 @@ jobs:
           git config --global user.email "actions@github.com"
 
           # Set up the private repo URL with PAT
-          PRIVATE_REPO="https://${{ secrets.GH_PAT }}@github.com/gitsteves/weekly-trader.git"
+          PRIVATE_REPO="https://${{ secrets.GH_SECRET }}@github.com/gitsteves/weekly-trader.git"
 
           # Add private repo as new remote
           git remote add mirror $PRIVATE_REPO
