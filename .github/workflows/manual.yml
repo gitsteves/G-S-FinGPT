@@ -22,7 +22,7 @@ jobs:
 
     - name: Push to private mirror
       run: |
-        git remote add mirror https://$GH_PAT@github.com/${{ github.event.inputs.target_repo }}.git
+        git remote add mirror https://$GH_SECRET@github.com/${{ github.event.inputs.target_repo }}.git
         git push mirror --mirror
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
