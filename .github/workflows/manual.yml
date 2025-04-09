@@ -1,0 +1,21 @@
+name: Mirror to Private Repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Push to private mirror
+      run: |
+        git remote add mirror https://$GH_PAT@github.com/gitsteves/weekly-trader.git
+        git push mirror --mirror
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
